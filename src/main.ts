@@ -5,6 +5,7 @@ import { join } from 'path';
 import { parse } from 'yaml';
 import { AppModule } from './app.module';
 import 'dotenv/config';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,7 +15,7 @@ async function bootstrap() {
   SwaggerModule.setup('doc', app, document);
 
   const PORT = process.env.PORT || 3000;
-
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.listen(PORT);
 }
 bootstrap();
