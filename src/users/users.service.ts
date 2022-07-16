@@ -8,11 +8,13 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-user.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from './interfaces/users.model';
-import { InMemoryDataBaseService } from 'src/in-memory-data-base/in-memory-data-base.service';
+import {
+  database,
+  InMemoryDataBaseService,
+} from 'src/in-memory-data-base/in-memory-data-base.service';
 
 @Injectable()
 export class UsersService {
-  constructor(public db: InMemoryDataBaseService) {}
   create(createUserDto: CreateUserDto): User {
     const user: User = {
       ...createUserDto,
@@ -22,7 +24,7 @@ export class UsersService {
       updatedAt: +Date.now(),
     };
 
-    this.db.db.users.push(user);
+    database.db.users.push(user);
 
     const { password, ...response } = user;
 
@@ -30,11 +32,11 @@ export class UsersService {
   }
 
   findAll(): User[] {
-    return this.db.db.users;
+    return database.db.users;
   }
 
   findOne(id: string): User {
-    const user = this.db.db.users.find((item: User) => item.id === id);
+    const user = database.db.users.find((item: User) => item.id === id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -42,8 +44,9 @@ export class UsersService {
   }
 
   update(id: string, updateUserDto: UpdatePasswordDto): User {
-    const user = this.db.db.users.find((item: User) => item.id === id);
-
+    const user = database.db.users.find((item: User) => item.id === id);
+    console.log(user);
+    console.log(updateUserDto);
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
@@ -63,13 +66,13 @@ export class UsersService {
   }
 
   remove(id: string): string {
-    const index = this.db.db.users.findIndex((item: User) => item.id === id);
+    const index = database.db.users.findIndex((item: User) => item.id === id);
 
     if (index === -1) {
       throw new NotFoundException('User not found');
     }
 
-    this.db.db.users.splice(index, 1);
+    database.db.users.splice(index, 1);
     return `User with id: ${id} was deleted!`;
   }
 }

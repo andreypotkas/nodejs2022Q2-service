@@ -18,6 +18,6 @@ import { InMemoryDataBaseService } from './in-memory-data-base/in-memory-data-ba
     FavoritesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, InMemoryDataBaseService],
 })
 export class AppModule {}

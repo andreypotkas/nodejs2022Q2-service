@@ -4,7 +4,10 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { InMemoryDataBaseService } from 'src/in-memory-data-base/in-memory-data-base.service';
+import {
+  database,
+  InMemoryDataBaseService,
+} from 'src/in-memory-data-base/in-memory-data-base.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { Album } from './entities/album.entity';
@@ -13,7 +16,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AlbumsService {
-  constructor(private readonly db: InMemoryDataBaseService) {}
   create(createAlbumDto: CreateAlbumDto) {
     const album: IAlbum = {
       ...new Album(),
@@ -24,16 +26,16 @@ export class AlbumsService {
       album[key] = createAlbumDto[key];
     }
 
-    this.db.db.albums.push(album);
+    database.db.albums.push(album);
     return album;
   }
 
   findAll() {
-    return this.db.db.albums;
+    return database.db.albums;
   }
 
   findOne(id: string) {
-    const album = this.db.db.albums.find((item: IAlbum) => item.id === id);
+    const album = database.db.albums.find((item: IAlbum) => item.id === id);
 
     if (!album) {
       throw new HttpException('Album not found', HttpStatus.NOT_FOUND);
@@ -43,7 +45,7 @@ export class AlbumsService {
   }
 
   update(id: string, updateAlbumDto: UpdateAlbumDto) {
-    const album = this.db.db.albums.find((item: IAlbum) => item.id === id);
+    const album = database.db.albums.find((item: IAlbum) => item.id === id);
 
     if (!album) {
       throw new HttpException('Album not found', HttpStatus.NOT_FOUND);
@@ -57,13 +59,15 @@ export class AlbumsService {
   }
 
   remove(id: string) {
-    const index = this.db.db.albums.findIndex((item: IAlbum) => item.id === id);
+    const index = database.db.albums.findIndex(
+      (item: IAlbum) => item.id === id,
+    );
 
     if (index === -1) {
       throw new NotFoundException('Album not found');
     }
 
-    this.db.db.albums.splice(index, 1);
+    database.db.albums.splice(index, 1);
     return `Album with id: ${id} was deleted!`;
   }
 }

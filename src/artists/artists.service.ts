@@ -9,10 +9,12 @@ import { UpdateArtistDto } from './dto/update-artist.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { IArtist } from './interfaces/artist.model';
 import { Artist } from './entities/artist.entity';
-import { InMemoryDataBaseService } from 'src/in-memory-data-base/in-memory-data-base.service';
+import {
+  database,
+  InMemoryDataBaseService,
+} from 'src/in-memory-data-base/in-memory-data-base.service';
 @Injectable()
 export class ArtistsService {
-  constructor(private readonly db: InMemoryDataBaseService) {}
   create(createArtistDto: CreateArtistDto) {
     const artist: IArtist = {
       ...new Artist(),
@@ -23,16 +25,16 @@ export class ArtistsService {
       artist[key] = createArtistDto[key];
     }
 
-    this.db.db.artists.push(artist);
+    database.db.artists.push(artist);
     return artist;
   }
 
   findAll() {
-    return this.db.db.artists;
+    return database.db.artists;
   }
 
   findOne(id: string) {
-    const artist = this.db.db.artists.find((item: IArtist) => item.id === id);
+    const artist = database.db.artists.find((item: IArtist) => item.id === id);
 
     if (!artist) {
       throw new HttpException('Artist not found', HttpStatus.NOT_FOUND);
@@ -42,7 +44,7 @@ export class ArtistsService {
   }
 
   update(id: string, updateArtistDto: UpdateArtistDto) {
-    const artist = this.db.db.artists.find((item: IArtist) => item.id === id);
+    const artist = database.db.artists.find((item: IArtist) => item.id === id);
 
     if (!artist) {
       throw new HttpException('Artist not found', HttpStatus.NOT_FOUND);
@@ -55,7 +57,7 @@ export class ArtistsService {
   }
 
   remove(id: string) {
-    const index = this.db.db.artists.findIndex(
+    const index = database.db.artists.findIndex(
       (item: IArtist) => item.id === id,
     );
 
@@ -63,7 +65,7 @@ export class ArtistsService {
       throw new NotFoundException('Artist not found');
     }
 
-    this.db.db.artists.splice(index, 1);
+    database.db.artists.splice(index, 1);
     return `Artist with id: ${id} was deleted!`;
   }
 }
