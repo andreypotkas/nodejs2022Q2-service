@@ -9,13 +9,10 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const DOC_API = await readFile(join('.', 'doc', 'api.yaml'), 'utf-8');
-  const document = parse(DOC_API);
-
-  SwaggerModule.setup('doc', app, document);
 
   const PORT = process.env.PORT || 3000;
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   await app.listen(PORT);
+  console.log(`SERVER RUN ON PORT: ${PORT}`);
 }
 bootstrap();
