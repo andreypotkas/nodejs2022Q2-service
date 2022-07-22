@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "docker": "docker-compose build",
+    "docker": "docker-compose up -d",
     "scan": "docker scan nodejs2022q2-service_api",
     "prebuild": "rimraf dist",
     "build": "nest build",
