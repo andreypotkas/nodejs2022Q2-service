@@ -22,6 +22,7 @@ npm install
 
 ```
 npm run docker
+npm run scan - scan for security vulnerabilities
 ```
 
 After starting the app on port (4000 as default) you can open http://localhost:4000/
