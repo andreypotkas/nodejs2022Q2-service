@@ -11,10 +11,25 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid()) @db.Uuid 
-  version  Int
-  password String?
-  login    String
+  id        String  @id @default(uuid()) @db.Uuid
+  version   Int
+  password  String?
+  login     String
   createdAt Int
   updatedAt Int
+}
+
+model Artist {
+  id     String  @unique
+  name   String
+  grammy Boolean
+  Album  Album[]
+}
+
+model Album {
+  id       String @unique
+  name     String
+  year     Int
+  artist   Artist? @relation(fields: [artistId], references: [id])
+  artistId String?
 }

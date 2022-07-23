@@ -6,6 +6,7 @@ import { ArtistsService } from 'src/artists/artists.service';
 import { AlbumsService } from 'src/albums/albums.service';
 import { TracksService } from 'src/tracks/tracks.service';
 import { TracksModule } from 'src/tracks/tracks.module';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Module({
   imports: [TracksModule],
@@ -15,6 +16,7 @@ import { TracksModule } from 'src/tracks/tracks.module';
     InMemoryDataBaseService,
     ArtistsService,
     AlbumsService,
+    PrismaService,
   ],
 })
 export class FavoritesModule {}

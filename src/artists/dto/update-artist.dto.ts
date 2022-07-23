@@ -7,5 +7,5 @@ export class UpdateArtistDto extends PartialType(CreateArtistDto) {
   name: string;
 
   @IsBoolean()
-  grammy: number;
+  grammy: boolean;
 }

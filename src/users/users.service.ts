@@ -10,14 +10,12 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { PrismaClient } from '@prisma/client';
 import { IUser } from './interfaces/users.model';
 
-const prisma = new PrismaClient();
-
 @Injectable()
 export class UsersService {
   constructor(public prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto): Promise<any> {
-    const user: IUser = await prisma.user.create({
+    const user: IUser = await this.prisma.user.create({
       data: {
         ...createUserDto,
         createdAt: +Date.now(),
@@ -32,11 +30,11 @@ export class UsersService {
   }
 
   async findAll(): Promise<any[]> {
-    return await prisma.user.findMany();
+    return await this.prisma.user.findMany();
   }
 
   async findOne(id: string): Promise<any> {
-    const user: any = await prisma.user.findUnique({
+    const user: any = await this.prisma.user.findUnique({
       where: {
         id,
       },
@@ -63,7 +61,7 @@ export class UsersService {
     user.version += 1;
     user.updatedAt = +Date.now();
 
-    await prisma.user.update({
+    await this.prisma.user.update({
       where: {
         id,
       },
@@ -82,7 +80,7 @@ export class UsersService {
       throw new NotFoundException('User not found');
     }
 
-    await prisma.user.delete({
+    await this.prisma.user.delete({
       where: {
         id,
       },
