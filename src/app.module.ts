@@ -8,9 +8,11 @@ import { AlbumsModule } from './albums/albums.module';
 import { UsersModule } from './users/users.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { InMemoryDataBaseService } from './in-memory-data-base/in-memory-data-base.service';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
+    PrismaModule,
     ArtistsModule,
     TracksModule,
     AlbumsModule,
