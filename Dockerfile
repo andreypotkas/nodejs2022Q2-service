@@ -21,7 +21,9 @@ RUN npm ci --legacy-peer-deps
 # Bundle app source
 COPY --chown=node:node . .
 
-#RUN npm run prisma:generate
+
+RUN npm run prisma:generate
+
 
 # Use the node user from the image (instead of the root user)
 USER node
@@ -40,7 +42,7 @@ COPY --chown=node:node package*.json ./
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 
 COPY --chown=node:node . .
-
+COPY --chown=node:node src/database/schema.prisma ./prisma/schema.prisma
 # Run the build command which creates the production bundle
 RUN npm run build
 
@@ -62,5 +64,6 @@ FROM node:18-alpine As production
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
+RUN npm run prisma:generate
 # Start the server using the production build
-CMD [ "node", "dist/main.js" ]
+CMD ["npm", "run", "start:prod"]

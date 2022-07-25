@@ -11,12 +11,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Module({
   imports: [TracksModule],
   controllers: [FavoritesController],
-  providers: [
-    FavoritesService,
-    InMemoryDataBaseService,
-    ArtistsService,
-    AlbumsService,
-    PrismaService,
-  ],
+  providers: [FavoritesService, ArtistsService, AlbumsService, PrismaService],
 })
 export class FavoritesModule {}

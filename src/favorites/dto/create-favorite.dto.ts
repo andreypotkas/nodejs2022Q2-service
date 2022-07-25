@@ -4,5 +4,5 @@ export class CreateFavoriteDto {
   @IsString()
   @IsUUID()
   @IsEmpty()
-  id: string;
+  id?: string;
 }

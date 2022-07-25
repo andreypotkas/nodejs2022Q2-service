@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { InMemoryDataBaseService } from './in-memory-data-base/in-memory-data-base.service';
 import { PrismaModule } from './prisma/prisma.module';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { PrismaModule } from './prisma/prisma.module';
     FavoritesModule,
   ],
   controllers: [AppController],
-  providers: [AppService, InMemoryDataBaseService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
