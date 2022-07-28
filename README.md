@@ -21,8 +21,10 @@ npm install
 ## Running application
 
 Docker
+При запуске в докере нужно дождаться пока в контейнере всё установится и запуститься сервер. Для этого можно зайти в сам контейнер с api и дождаться пока nest logs выдаст SERVER RUN ON PORT: 4000
 
 ```
+
 npm run docker
 npm run scan - scan for security vulnerabilities
 ```
