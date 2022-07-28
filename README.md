@@ -24,9 +24,7 @@ Docker
 При запуске в докере нужно дождаться пока в контейнере всё установится и запустится сервер. Для этого можно зайти в сам контейнер с api и ждать пока nest logs выдаст SERVER RUN ON PORT: 4000
 
 ```
-
 npm run docker
-npm run scan - scan for security vulnerabilities
 ```
 
 Local
