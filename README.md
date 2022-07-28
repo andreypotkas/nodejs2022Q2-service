@@ -9,7 +9,7 @@
 
 ```
 git clone https://github.com/andreypotkas/nodejs2022Q2-service.git
-git checkout container
+git checkout postgreSQL
 ```
 
 ## Installing NPM modules
@@ -20,9 +20,17 @@ npm install
 
 ## Running application
 
+Docker
+
 ```
 npm run docker
 npm run scan - scan for security vulnerabilities
+```
+
+Local
+
+```
+npm run start
 ```
 
 After starting the app on port (4000 as default) you can open http://localhost:4000/
