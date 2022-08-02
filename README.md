@@ -16,6 +16,7 @@ git checkout postgreSQL
 
 ```
 npm install
+npx generate prisma
 ```
 
 ## Running application
