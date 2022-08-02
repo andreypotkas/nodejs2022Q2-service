@@ -1,0 +1,41 @@
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      # Only will build development stage from our dockerfile
+      target: development
+    restart: always
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+    volumes:
+      - .:/usr/src/app
+      - ./usr/src/app/node_modules
+    # Run in dev Mode: npm run start:dev
+    command: npm run start:prod
+    ports:
+      - 4000:4000
+    depends_on:
+      - postgres
+  postgres:
+    build:
+      dockerfile: ./postgres/Dockerfile
+      context: .
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - '5432:5432'
+    volumes:
+      - docker-nest-postgres:/var/lib/postgresql/data
+
+volumes:
+  docker-nest-postgres:
+
+networks:
+  default:
+    name: myNet
